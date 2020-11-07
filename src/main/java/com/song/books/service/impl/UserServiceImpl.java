@@ -6,6 +6,8 @@ import com.song.books.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -18,6 +20,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BooksUser insertUser(BooksUser user) {
-        return null;
+        user.setId(UUID.randomUUID().toString());
+        return userDao.save(user);
+    }
+
+    @Override
+    public void updateUser(String passWord,String userId) {
+        userDao.updateUser(passWord,userId);
     }
 }

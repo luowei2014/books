@@ -20,7 +20,7 @@ public class UserController {
     public String login(@RequestParam(value = "userName",required = true,defaultValue = "") String userName,
                         @RequestParam(value = "passWord",required = true,defaultValue = "") String passWord){
         BooksUser booksUser=userService.selectUser(userName,passWord);
-        return "login";
+        return "login success";
     }
 
     /**
@@ -28,8 +28,15 @@ public class UserController {
      * @param user
      * @return
      */
-    @RequestMapping(value = "/reg",method = RequestMethod.POST)
+    @PostMapping(value = "/reg",  consumes = "application/json")
     public String regist(@RequestBody BooksUser user){
-        return "reg";
+        userService.insertUser(user);
+        return "reg success";
+    }
+
+    @PostMapping(value = "/reset",  consumes = "application/json")
+    public String reset(@RequestBody BooksUser user){
+        userService.updateUser(user.getPassWord(), user.getId());
+        return "reset success";
     }
 }
